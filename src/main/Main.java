@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import client.controller.Controller;
 import client.view.MenuView2;
