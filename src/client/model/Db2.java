@@ -3,18 +3,15 @@ package client.model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public class Db2 {
-	private static Db2 db2;
+	private static Db2 db2 = new Db2();
+	
 	private Db2(){
+		
 	}
 	public static Db2 getProduct(){
-		if(db2 == null){
-			synchronized(Db2.class){
-				if(db2 == null){
-					db2 = new Db2();
-				}
-			}
-		}
 		return db2;
 	}
 	
