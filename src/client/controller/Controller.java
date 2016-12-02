@@ -17,19 +17,18 @@ import client.model.MailPrice;
 import client.model.ShopList;
 import client.model.Strategy;
 import client.view.MenuView2;
+import server.model.Observer;
 
-public class Controller {
+public class Controller implements Observer{
 	private MenuView2 menuView2;
 	private ShopList shopList;
 	private CarList carList;
 	private Strategy strategy;
-	private Db2 db2;
 	
 	public Controller(MenuView2 menuView2) {
 		this.menuView2 = menuView2;
 		this.menuView2.show();
-		db2 = Db2.getProduct();
-		shopList = db2.readItem();
+		shopList = new ShopList();
 		carList = new CarList();
 		//顯示商品列表
 		loadItemList();
@@ -62,8 +61,16 @@ public class Controller {
 		menuView2.setBillEnabled(false);
 	}
 	
+	//Observer
+	@Override
+	public void update(ShopList shoplist) {
+		this.shopList = shoplist;
+		loadItemList();
+	}
+	
 	//載入商品清單
 	private void loadItemList() {
+		menuView2.removeAllShopItem();
 		Iterator iterator = shopList.iterator();
 		while(iterator.hasNext()){
 			menuView2.addShopItem(iterator.Next().getName());
@@ -236,5 +243,6 @@ public class Controller {
 			menuView2.setTransportmethodText("貨到付款");
 		}
 	}
+
 	
 }

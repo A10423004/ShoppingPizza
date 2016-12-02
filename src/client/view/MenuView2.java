@@ -171,6 +171,10 @@ public class MenuView2 {
 	public void addShopItem(String item) {
 		itemModel.addElement(item);
 	}
+	//清空商品列表的商品資料
+	public void removeAllShopItem() {
+		itemModel.removeAllElements();
+	}
 	//設定商品列表的監聽器
 	public void addShopListSelectionListener(ListSelectionListener listSelectionListener) {
 		itemList.addListSelectionListener(listSelectionListener);
