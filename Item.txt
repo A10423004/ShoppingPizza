@@ -1,4 +1,4 @@
-Java textbook, 109.99
-SAD textbook, 299.99
-Android Studio 2.0, 200.00
-blablabla, 300
+Seafood, 109.99
+Honey Octopus, 299.99
+Sukiyaki Beef, 200.00
+Kimchi Pork, 300

@@ -8,9 +8,12 @@ import client.model.ShopList;
 
 public class CenterConsole implements Subject{
 	private static CenterConsole centerConsole = new CenterConsole();
-
+	
 	private ArrayList<Observer> observers;
 	private ShopList shoplist;
+	
+	
+	
 	
 	private CenterConsole() {
 		observers = new ArrayList<Observer>();
@@ -42,11 +45,16 @@ public class CenterConsole implements Subject{
 		}
 	}
 	
+	
+	
+	
+		
 	/*測試用
 	 * 測試加商品並通知Observer
 	 * */
-	public void addNewItem(String itemNmae, double price){
-		shoplist.add(new ShopItem(itemNmae, price));
+	public void addNewItem(String itemName, double price){
+		shoplist.add(new ShopItem(itemName,price));
 		notifyObserver();
+		
 	}
 }
