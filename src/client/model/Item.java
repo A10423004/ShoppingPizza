@@ -17,7 +17,7 @@ public class Item {
 		setTopping(topping);
 	}
 
-	public Item(String name2, double price2) {
+	public Item(String name, double price) {
 		// TODO Auto-generated constructor stub
 		setName(name);
 		setPrice(price);

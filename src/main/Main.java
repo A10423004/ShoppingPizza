@@ -38,6 +38,7 @@ public class Main {
 		String check = cin.nextLine();
 		if(check.toLowerCase().equals("y")){
 			centerConsole.addNewItem(hawaiian.getName(), hawaiian.getPrice(), hawaiian.getCrust(), hawaiian.getMains(), hawaiian.getSauce(), hawaiian.getTopping());
+			
 		}
 		
 		
