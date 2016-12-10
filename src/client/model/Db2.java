@@ -24,7 +24,7 @@ public class Db2 {
 			BufferedReader br = new BufferedReader(fr);
 			while (br.ready()) {
 				String[] str = br.readLine().split(",");
-				ci = new ShopItem(str[0], Double.parseDouble(str[1]));
+				ci = new ShopItem(str[0], Double.parseDouble(str[1]), str[2], str[3], str[4], str[5]);
 				shopList.add(ci);
 			}
 			fr.close();

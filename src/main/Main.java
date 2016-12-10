@@ -26,7 +26,7 @@ public class Main {
 		hawaiian.setName("Hawaiian");
 		hawaiian.setPrice(100.0);
 		hawaiian.setCrust("thick");
-		hawaiian.setMains("ham, pineapple");
+		hawaiian.setMains("ham¡B pineapple");
 		hawaiian.setSauce("mayonnaise");
 		hawaiian.setTopping("cheese powder");
 		
@@ -37,7 +37,7 @@ public class Main {
 		System.out.println("Is there any update?(y/n)");
 		String check = cin.nextLine();
 		if(check.toLowerCase().equals("y")){
-			centerConsole.addNewItem(hawaiian.getName(), hawaiian.getPrice());
+			centerConsole.addNewItem(hawaiian.getName(), hawaiian.getPrice(), hawaiian.getCrust(), hawaiian.getMains(), hawaiian.getSauce(), hawaiian.getTopping());
 		}
 		
 		

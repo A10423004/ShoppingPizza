@@ -1,4 +1,4 @@
-Seafood, 109.99
-Honey Octopus, 299.99
-Sukiyaki Beef, 200.00
-Kimchi Pork, 300
+Seafood, 109.99, thick, shrimp, mayonnaise,  onion¡Bcrab
+Honey Octopus, 299.99, thick, octopus, honey sauce, red pepper¡Bmushroom 
+Sukiyaki Beef, 200.00, thin, Sukiyaki Beef, teriyaki, red pepper¡Bonion¡Bmushroom 
+Kimchi Pork, 300, thin, Pork, kimchi, onion
