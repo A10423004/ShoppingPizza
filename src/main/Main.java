@@ -1,4 +1,5 @@
 package main;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import client.controller.Controller;
@@ -10,37 +11,75 @@ import server.model.PizzaKinds;
 
 public class Main {
 	public static void main(String[] args) {
+		String name, crust, mains, sauce, topping;
+		double price = 0;
+		boolean num = false;
 		Scanner cin = new Scanner(System.in); 
-		
+				
 		CenterConsole centerConsole = CenterConsole.getProduct();
 		
 		MenuView2 mv = new MenuView2();
 		Controller controller = new Controller(mv);
-		
 		centerConsole.register(controller);
-
-		//new a pizza kinds
-		PizzaKinds hawaiian = new PizzaKinds();
 		
-		//set pizza name, price, crust, mains, sauce and topping
-		hawaiian.setName("Hawaiian");
-		hawaiian.setPrice(100.0);
-		hawaiian.setCrust("thick");
-		hawaiian.setMains("ham¡B pineapple");
-		hawaiian.setSauce("mayonnaise");
-		hawaiian.setTopping("cheese powder");
 		
-		PizzaBuilder hawaiianpizza = new PizzaBuilder();
-		Director director = new Director(hawaiianpizza);
-		director.construct(hawaiian);
 		
-		System.out.println("Is there any update?(y/n)");
-		String check = cin.nextLine();
-		if(check.toLowerCase().equals("y")){
-			centerConsole.addNewItem(hawaiian.getName(), hawaiian.getPrice(), hawaiian.getCrust(), hawaiian.getMains(), hawaiian.getSauce(), hawaiian.getTopping());
+		while(true){
+		
+			System.out.println("New Pizza Kinds: ");
+			name = cin.next();
+			System.out.println("");
 			
+			System.out.println("Crust: ");
+			crust = cin.next();
+			System.out.println("");
+			
+			System.out.println("Mains: ");
+			mains = cin.next();
+			System.out.println("");
+			
+			System.out.println("Sauce: ");
+			sauce = cin.next();
+			System.out.println("");
+			
+			System.out.println("Topping: ");
+			topping = cin.next();
+			System.out.println("");
+			
+			System.out.println("Price: ");
+//			try{
+//				while(num != true ){
+					price = cin.nextDouble();
+					System.out.println("------------------------");
+//				}
+//			}catch(InputMismatchException e){
+//				num = isNumeric(price);
+//				
+//				
+//			}
+//			
+			
+			
+										
+			PizzaBuilder newkindspizza = new PizzaBuilder();
+			Director director = new Director(newkindspizza);
+			director.construct(name, price, crust, mains, sauce, topping);
+			PizzaKinds pizza = newkindspizza.getPizza();
+		
+			centerConsole.addNewItem(pizza.getName(), pizza.getPrice(), pizza.getCrust(), pizza.getMains(), pizza.getSauce(), pizza.getTopping());
+
 		}
 		
 		
 	}
+	public static boolean isNumeric(double num){
+		String number = String.valueOf(num);
+		   for(int i=number.length();--i>=0;){
+		      int chr=number.charAt(i);
+		      if(chr<48 || chr>57)
+		         return false;
+		   }
+		   return true;
+		}
+
 }

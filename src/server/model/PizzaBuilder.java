@@ -2,24 +2,23 @@ package server.model;
 
 public class PizzaBuilder implements Builder{
 
-	private StringBuffer sb = new StringBuffer();
-	
+	private PizzaKinds pizzakinds = new PizzaKinds();
 	@Override
-	public void buildPizza(PizzaKinds pizzakinds) {
+	public void buildPizza(String name, double price, String crust,
+			String mains, String sauce, String topping) {
 		// TODO Auto-generated method stub
-		sb.append(pizzakinds.getName());
-		sb.append("\nCrust: ");
-		sb.append(pizzakinds.getCrust());
-		sb.append("\nMains: ");
-		sb.append(pizzakinds.getMains());
-		sb.append("\nSauce: ");
-		sb.append(pizzakinds.getSauce());
-		sb.append("\nTopping: ");
-		sb.append(pizzakinds.getTopping());
+		pizzakinds.setName(name);
+		pizzakinds.setPrice(price);
+		pizzakinds.setCrust(crust);
+		pizzakinds.setMains(mains);
+		pizzakinds.setSauce(sauce);
+		pizzakinds.setTopping(topping);
 	}
 	
-	public StringBuffer getResult(){
-		return sb;
+	@Override
+	public PizzaKinds getPizza() {
+		// TODO Auto-generated method stub
+		return pizzakinds;
 	}
 
 }
