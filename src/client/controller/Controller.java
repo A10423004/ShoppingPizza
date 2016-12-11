@@ -25,6 +25,7 @@ public class Controller implements Observer{
 	private CarList carList;
 	private Strategy strategy;
 	
+	
 	public Controller(MenuView2 menuView2) {
 		this.menuView2 = menuView2;
 		this.menuView2.show();
@@ -41,8 +42,6 @@ public class Controller implements Observer{
 		menuView2.addButtonBuyActionListener(new ButtonBuyActionListener());
 		//<按鈕監聽器
 		menuView2.addButtonDelActionListener(new ButtonDelActionListener());
-		//RemoveAllItem按鈕監聽器
-		menuView2.addRemoveAllItemActionListener(new RemoveAllItemActionListener());
 		//CheckOut按鈕監聽器
 		menuView2.addCheckOutActionListener(new CheckOutActionListener());
 		//Bill按鈕監聽器
@@ -94,34 +93,41 @@ public class Controller implements Observer{
 			//有按在項目欄才有動作
 			if(selectIndex >= 0){
 				String itemName = shopList.getItemAt(selectIndex).getName();
-				int num = menuView2.getSelectNum();
 				double price = shopList.getItemAt(selectIndex).getPrice();
-				carList.add(new CartItem(itemName, num, price));
+				String itemCrust = shopList.getItemAt(selectIndex).getCrust();
+				String itemMains = shopList.getItemAt(selectIndex).getMains();
+				String itemSauce = shopList.getItemAt(selectIndex).getSauce();
+				String itemTopping = shopList.getItemAt(selectIndex).getTopping();
+				carList.add(new CartItem(itemName, price, itemCrust, itemMains, itemSauce, itemTopping ));
+				menuView2.shwoPizzaName("Kinds: " + itemName);
+				menuView2.shwoPizzaCrust("Crust: " + itemCrust);
+				menuView2.shwoPizzaMains("Mains: " + itemMains);
+				menuView2.shwoPizzaSauce("Sauce: " + itemSauce);
+				menuView2.shwoPizzaTopping("Topping: " + itemTopping);
 				//更新購物車畫面
 				showCarItems();
 				//打開<、CheckOut按鈕供點選
 				menuView2.setButtonDelEnabled(true);
 				menuView2.setCheckOutEnabled(true);
+				menuView2.setButtonBuyEnabled(false);
 			}
 		}
 	}
+	
+	
 	
 	//更新購物車清單
 	public void showCarItems() {
 		//先清空購物車
 		menuView2.carListClear();
 		//然後填入項目
-		menuView2.addCarItem("No.|                Item Name|  Quantity|    Price|    Subtotal");
-		menuView2.addCarItem("---+-------------------------+----------+---------+-----------+\n");
+		menuView2.addCarItem("Item Name");
+		menuView2.addCarItem("-----------\n");
 		Iterator iterator = carList.iterator();
-		int i = 0;
 		while(iterator.hasNext()){
 			CartItem cartItem = (CartItem) iterator.Next();
 			String name = cartItem.getName();
-			int quantity = cartItem.getQuantity();
-			double price = cartItem.getPrice();
-			menuView2.addCarItem(String.format("%3d|%25s|%10d|%9.2f|%12.2f\n", i, name, quantity, price, quantity * price));
-			i++;
+			menuView2.addCarItem(String.format("%s\n", name));
 		}
 	}
 	
@@ -129,10 +135,9 @@ public class Controller implements Observer{
 	class ButtonDelActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			int selectIndex = menuView2.getSelectCarListIndex() - 2;
-			int num = menuView2.getSelectNum();
 			//按在標頭欄無動作，按在項目欄才有動作
 			if(selectIndex >= 0){
-				carList.remove(selectIndex, num);
+				carList.remove(selectIndex);
 				//更新購物車畫面
 				showCarItems();
 				//如果刪光了就不能再刪除與結帳了
@@ -141,16 +146,12 @@ public class Controller implements Observer{
 					menuView2.setCheckOutEnabled(false);
 				}
 			}
-		}
-	}
-	
-	//移除全部的按鈕動作
-	class RemoveAllItemActionListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			carList.removeAll();
-			showCarItems();
-			menuView2.setButtonDelEnabled(false);
-			menuView2.setCheckOutEnabled(false);
+			menuView2.setButtonBuyEnabled(true);
+			menuView2.shwoPizzaName("Kinds: ");
+			menuView2.shwoPizzaCrust("Crust: ");
+			menuView2.shwoPizzaMains("Mains: ");
+			menuView2.shwoPizzaSauce("Sauce: ");
+			menuView2.shwoPizzaTopping("Topping: ");
 		}
 	}
 	
@@ -174,7 +175,6 @@ public class Controller implements Observer{
 			//按鈕全部關閉
 			menuView2.setButtonBuyEnabled(false);
 			menuView2.setButtonDelEnabled(false);
-			menuView2.setRemoveAllItemEnabled(false);
 			menuView2.setCheckOutEnabled(false);
 			menuView2.setRbBymailEnabled(false);
 			menuView2.setRbCashondeliveryEnabled(false);
@@ -182,19 +182,18 @@ public class Controller implements Observer{
 			String msg = "The total price is " + carList.getTotalCost() + "NTD.\nThank you and come again.";
 			menuView2.showCheckOutMessage(msg);
 			String str = "";
-			str += "No.|                Item Name|  Quantity|    Price|    Subtotal\n";
-			str += "---+-------------------------+----------+---------+------------\n";
+			str += "Item Name|    Price|    Subtotal\n";
+			str += "-------------------------+---------+------------\n";
 			Iterator iterator = carList.iterator();
 			int i = 0;
 			while(iterator.hasNext()){
 				CartItem cartItem = (CartItem) iterator.Next();
 				String name = cartItem.getName();
-				int quantity = cartItem.getQuantity();
 				double price = cartItem.getPrice();
-				str += String.format("%3d|%25s|%10d|%9.2f|%12.2f\n", i, name, quantity, price, quantity * price);
+				str += String.format("%25s|%12.2f\n", name, price);
 				i++;
 			}
-			str += "---+-------------------------+----------+---------+------------\n";
+			str += "-------------------------+----------+------------\n";
 			str += String.format("Total: %.2f\n", carList.getTotalCost());
 			try {
 				FileWriter fw = new FileWriter("Bill.txt");
