@@ -137,9 +137,14 @@ public class Controller implements Observer{
 			int selectIndex = menuView2.getSelectCarListIndex() - 2;
 			//按在標頭欄無動作，按在項目欄才有動作
 			if(selectIndex >= 0){
-				carList.remove(selectIndex);
+				carList.remove(selectIndex);				
 				//更新購物車畫面
 				showCarItems();
+				menuView2.shwoPizzaName("Kinds: ");
+				menuView2.shwoPizzaCrust("Crust: ");
+				menuView2.shwoPizzaMains("Mains: ");
+				menuView2.shwoPizzaSauce("Sauce: ");
+				menuView2.shwoPizzaTopping("Topping: ");
 				//如果刪光了就不能再刪除與結帳了
 				if(carList.getLength() == 0){
 					menuView2.setButtonDelEnabled(false);
@@ -147,11 +152,6 @@ public class Controller implements Observer{
 				}
 			}
 			menuView2.setButtonBuyEnabled(true);
-			menuView2.shwoPizzaName("Kinds: ");
-			menuView2.shwoPizzaCrust("Crust: ");
-			menuView2.shwoPizzaMains("Mains: ");
-			menuView2.shwoPizzaSauce("Sauce: ");
-			menuView2.shwoPizzaTopping("Topping: ");
 		}
 	}
 	
