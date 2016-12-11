@@ -149,9 +149,9 @@ public class Controller implements Observer{
 				if(carList.getLength() == 0){
 					menuView2.setButtonDelEnabled(false);
 					menuView2.setCheckOutEnabled(false);
+					menuView2.setButtonBuyEnabled(true);
 				}
 			}
-			menuView2.setButtonBuyEnabled(true);
 		}
 	}
 	
