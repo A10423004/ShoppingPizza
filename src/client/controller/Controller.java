@@ -134,10 +134,9 @@ public class Controller implements Observer{
 	//按下<刪除的動作監聽器
 	class ButtonDelActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			int selectIndex = menuView2.getSelectCarListIndex() - 2;
 			//按在標頭欄無動作，按在項目欄才有動作
-			if(selectIndex >= 0){
-				carList.remove(selectIndex);				
+			
+				carList.remove(0);				
 				//更新購物車畫面
 				showCarItems();
 				menuView2.shwoPizzaName("Kinds: ");
@@ -146,12 +145,9 @@ public class Controller implements Observer{
 				menuView2.shwoPizzaSauce("Sauce: ");
 				menuView2.shwoPizzaTopping("Topping: ");
 				//如果刪光了就不能再刪除與結帳了
-				if(carList.getLength() == 0){
 					menuView2.setButtonDelEnabled(false);
 					menuView2.setCheckOutEnabled(false);
 					menuView2.setButtonBuyEnabled(true);
-				}
-			}
 		}
 	}
 	
