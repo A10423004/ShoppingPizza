@@ -8,23 +8,35 @@ import java.io.IOException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import client.controller.Controller.CheeseActionListener;
+import client.controller.Controller.TomatosauceActionListener;
+import client.controller.Controller.MozzarellaActionListener;
+import client.controller.Controller.RbDeliveryActionListener;
+import client.controller.Controller.RbPickupActionListener;
 import client.model.CarList;
 import client.model.CartItem;
-import client.model.CashOnDeliveryPrice;
+import client.model.CheeseConcreateDecorator;
+import client.model.DeliveryStrategy;
 import client.model.Db2;
 import client.model.Iterator;
-import client.model.MailPrice;
+import client.model.MozzarellaConcreateDecorator;
+import client.model.PickupStrategy;
+import client.model.PizzaComponent;
 import client.model.ShopList;
 import client.model.Strategy;
+import client.model.TomatosauceConcreateDecorator;
 import client.view.MenuView2;
 import server.model.Observer;
+import server.model.PizzaKinds;
 
 public class Controller implements Observer{
 	private MenuView2 menuView2;
 	private ShopList shopList;
 	private CarList carList;
 	private Strategy strategy;
-	
+	private CartItem cartitem;
+	private PizzaComponent PizzaComponent = new PizzaKinds();
+	double totalPrice;
 	
 	public Controller(MenuView2 menuView2) {
 		this.menuView2 = menuView2;
@@ -48,10 +60,16 @@ public class Controller implements Observer{
 		menuView2.addBillActionListener(new BillActionListener());
 		//Exit按鈕監聽器
 		menuView2.addExitActionListener(new ExitActionListener());
-		//Bymail按鈕監聽器
-		menuView2.addRbBymailActionListener(new RbBymailActionListener());
-		//Cashondelivery按鈕監聽器
-		menuView2.addRbCashondeliveryActionListener(new RbCashondeliveryActionListener());
+		//Pickup按鈕監聽器
+		menuView2.addRbPickupActionListener(new RbPickupActionListener());
+		//Delivery按鈕監聽器
+		menuView2.addRbDeliveryActionListener(new RbDeliveryActionListener());
+		//Cheese按鈕監聽器
+		menuView2.addCheeseActionListener(new CheeseActionListener());
+		//Mozzarella按鈕監聽器
+		menuView2.addMozzarellaActionListener(new MozzarellaActionListener());
+		//Tomatosauce按鈕監聽器
+		menuView2.addTomatosauceActionListener(new TomatosauceActionListener());
 		/*監聽器設定結束*/
 		
 		//限制<、CheckOut、Bill按鈕不能點選
@@ -98,7 +116,8 @@ public class Controller implements Observer{
 				String itemMains = shopList.getItemAt(selectIndex).getMains();
 				String itemSauce = shopList.getItemAt(selectIndex).getSauce();
 				String itemTopping = shopList.getItemAt(selectIndex).getTopping();
-				carList.add(new CartItem(itemName, price, itemCrust, itemMains, itemSauce, itemTopping ));
+				cartitem = new CartItem(itemName, price, itemCrust, itemMains, itemSauce, itemTopping );
+				carList.add(cartitem);
 				menuView2.shwoPizzaName("Kinds: " + itemName);
 				menuView2.shwoPizzaCrust("Crust: " + itemCrust);
 				menuView2.shwoPizzaMains("Mains: " + itemMains);
@@ -134,9 +153,10 @@ public class Controller implements Observer{
 	//按下<刪除的動作監聽器
 	class ButtonDelActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			int selectIndex = menuView2.getSelectCarListIndex() - 2;
 			//按在標頭欄無動作，按在項目欄才有動作
-			
-				carList.remove(0);				
+			if(selectIndex >= 0){
+				carList.remove(selectIndex);				
 				//更新購物車畫面
 				showCarItems();
 				menuView2.shwoPizzaName("Kinds: ");
@@ -145,9 +165,12 @@ public class Controller implements Observer{
 				menuView2.shwoPizzaSauce("Sauce: ");
 				menuView2.shwoPizzaTopping("Topping: ");
 				//如果刪光了就不能再刪除與結帳了
+				if(carList.getLength() == 0){
 					menuView2.setButtonDelEnabled(false);
 					menuView2.setCheckOutEnabled(false);
 					menuView2.setButtonBuyEnabled(true);
+				}
+			}
 		}
 	}
 	
@@ -155,15 +178,15 @@ public class Controller implements Observer{
 	class CheckOutActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			//判斷Strategy的運送方式是哪一種，再把相對應的Strategy new出來，傳進CarList
-			if(menuView2.rbRbBymail_isSelected()){//使用者點選mail方式
-				strategy = new MailPrice();
+			if(menuView2.rbRbPickup_isSelected()){//使用者點選Pickup方式
+				strategy = new PickupStrategy();
 				carList.setStrategy(strategy);
 			}
-			else if(menuView2.rbCashondelivery_isSelected()){//使用者點選Cashondelivery方式
-				strategy = new CashOnDeliveryPrice();
+			else if(menuView2.rbDelivery_isSelected()){//使用者點選Delivery方式
+				strategy = new DeliveryStrategy();
 				carList.setStrategy(strategy);
 			}else{//若都沒有點選則跳出
-				String msg = "請選擇運送方式!!";
+				String msg = "請選擇取餐方式!!";
 				menuView2.showCheckOutMessage(msg);
 				return;
 			}
@@ -172,8 +195,8 @@ public class Controller implements Observer{
 			menuView2.setButtonBuyEnabled(false);
 			menuView2.setButtonDelEnabled(false);
 			menuView2.setCheckOutEnabled(false);
-			menuView2.setRbBymailEnabled(false);
-			menuView2.setRbCashondeliveryEnabled(false);
+			menuView2.setRbPickupEnabled(false);
+			menuView2.setRbDeliveryEnabled(false);
 			//開始結帳
 			String msg = "The total price is " + carList.getTotalCost() + "NTD.\nThank you and come again.";
 			menuView2.showCheckOutMessage(msg);
@@ -223,21 +246,53 @@ public class Controller implements Observer{
 		}
 	}
 	
-	//Bymail按鈕動作
-	class RbBymailActionListener implements ActionListener{
+	//Pickup按鈕動作
+	class RbPickupActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			menuView2.setTransportmethodText("郵寄");
+			menuView2.setTakewaymealText("自取");
 		}
 	}
-	
-	//Cashondelivery按鈕動作
-	class RbCashondeliveryActionListener implements ActionListener{
+			
+	//Delivery按鈕動作
+	class RbDeliveryActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			menuView2.setTransportmethodText("貨到付款");
+			menuView2.setTakewaymealText("外送");
 		}
 	}
-
+		
+	//Cheese按鈕動作
+	class CheeseActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PizzaComponent = new CheeseConcreateDecorator(PizzaComponent);
+			menuView2.setlbSelect("Select： " + PizzaComponent.getName()+ cartitem.getName());
+			
+			carList.setPrice(PizzaComponent.getPrice());
+		}
+	}
+		
+	//Mozzarella按鈕動作
+	class MozzarellaActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PizzaComponent= new MozzarellaConcreateDecorator(PizzaComponent);
+			menuView2.setlbSelect("Select：" + PizzaComponent.getName());
+			
+			carList.setPrice(PizzaComponent.getPrice());
+		}
+	}
+		
+	//Tomatosauce按鈕動作
+	class TomatosauceActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PizzaComponent = new TomatosauceConcreateDecorator(PizzaComponent);
+			menuView2.setlbSelect("Select：" + PizzaComponent.getName());
+			
+			carList.setPrice(PizzaComponent.getPrice());
+		}
+	}
 	
 }

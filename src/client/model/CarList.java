@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class CarList implements List{
 	private ArrayList<CartItem> list;
 	private Strategy strategy;
+	double totalPrice =0;
+	
 	public CarList() {
 		list = new ArrayList<CartItem>();
 	}
@@ -38,11 +40,11 @@ public class CarList implements List{
 			for(CartItem item : list){
 				total += item.getPrice() ;
 			}
-			total += getStrategy();
+			total += getStrategy() + totalPrice;
 			return total;
 		}
 		catch(Exception e){
-			System.out.println("請選擇運送方式!!");
+			System.out.println("請選擇取餐方式!!");
 			return (Double) null;
 		}
 	}
@@ -52,7 +54,11 @@ public class CarList implements List{
 	}
 	//get取得Strategy的getTransportPrice()方法
 	public double getStrategy(){
-		return strategy.getTransportPrice();
+		return strategy.getTakewaymealPrice();
+	}
+	//set設置Price的方法
+	public void setPrice(double price) {
+		this.totalPrice = price;
 	}
 	
 }

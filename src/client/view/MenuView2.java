@@ -44,21 +44,27 @@ public class MenuView2 {
 	private JButton btnCheckOut;
 	private JButton btnBill;
 	private JButton btnExit;
-	private JRadioButton rbBymail;//郵寄按鈕
-	private JRadioButton rbCashondelivery;//貨到付款按鈕
-	private JLabel lbTransportmethod;
-	private JLabel lbTransportmethodText;//運送方式顯示
+	private JRadioButton rbPickup;//自取按鈕
+	private JRadioButton rbDelivery;//外送按鈕
+	private JLabel lbTakewaymeal;
+	private JLabel lbTakewaymealText;//自取方式顯示
+	private JLabel lbGarnish;//配菜顯示
+	private JButton btnCheese;//起司按鈕
+	private JButton btnMozzarella;//奶酪按鈕
+	private JButton btnTomatosauce;//番茄醬按鈕
+	private JLabel lbSelect;//選取方式顯示
 	private JLabel pizzaname;
 	private JLabel pizzacrust;
 	private JLabel pizzamains;
 	private JLabel pizzasauce;
 	private JLabel pizzatopping;
+	private JLabel lblNewLabel;
 
 	
 	private void initialize() {
 		frmShoppingcart = new JFrame();
 		frmShoppingcart.setTitle("ShoppingCart");
-		frmShoppingcart.setBounds(100, 100, 863, 393);
+		frmShoppingcart.setBounds(100, 100, 883, 393);
 		frmShoppingcart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		frmShoppingcart.getContentPane().setLayout(springLayout);
@@ -102,9 +108,9 @@ public class MenuView2 {
 		cartModel = new DefaultListModel<>();
 		cartList = new JList<String>(cartModel);
 		springLayout.putConstraint(SpringLayout.NORTH, cartList, 6, SpringLayout.SOUTH, lblShoppingcart);
+		springLayout.putConstraint(SpringLayout.WEST, cartList, 6, SpringLayout.EAST, button_buy);
 		springLayout.putConstraint(SpringLayout.SOUTH, cartList, 0, SpringLayout.SOUTH, itemList);
 		cartList.setFont(new Font("Consolas", Font.BOLD, 14));
-		springLayout.putConstraint(SpringLayout.WEST, cartList, 6, SpringLayout.EAST, button_buy);
 		frmShoppingcart.getContentPane().add(cartList);
 		
 		btnCheckOut = new JButton("Check Out");
@@ -122,70 +128,97 @@ public class MenuView2 {
 		springLayout.putConstraint(SpringLayout.NORTH, btnExit, 0, SpringLayout.NORTH, btnBill);
 		frmShoppingcart.getContentPane().add(btnExit);
 		
-		rbBymail = new JRadioButton("By mail");
-		springLayout.putConstraint(SpringLayout.EAST, rbBymail, -515, SpringLayout.EAST, frmShoppingcart.getContentPane());
-		frmShoppingcart.getContentPane().add(rbBymail);
+		rbPickup = new JRadioButton("Pickup");
+		springLayout.putConstraint(SpringLayout.NORTH, rbPickup, -4, SpringLayout.NORTH, lblPrice);
+		springLayout.putConstraint(SpringLayout.WEST, rbPickup, 0, SpringLayout.WEST, lblShoppingcart);
+		frmShoppingcart.getContentPane().add(rbPickup);
 		
-		rbCashondelivery = new JRadioButton("Cash on delivery");
-		springLayout.putConstraint(SpringLayout.EAST, cartList, 0, SpringLayout.EAST, rbCashondelivery);
-		springLayout.putConstraint(SpringLayout.WEST, rbCashondelivery, 7, SpringLayout.EAST, rbBymail);
-		frmShoppingcart.getContentPane().add(rbCashondelivery);
+		rbDelivery = new JRadioButton("Delivery");
+		springLayout.putConstraint(SpringLayout.NORTH, rbDelivery, -4, SpringLayout.NORTH, lblPrice);
+		springLayout.putConstraint(SpringLayout.WEST, rbDelivery, 6, SpringLayout.EAST, rbPickup);
+		frmShoppingcart.getContentPane().add(rbDelivery);
 		
-		lbTransportmethod = new JLabel("Transport Method\uFF1A");
-		springLayout.putConstraint(SpringLayout.NORTH, lbTransportmethod, 301, SpringLayout.NORTH, frmShoppingcart.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, lbTransportmethod, -31, SpringLayout.SOUTH, frmShoppingcart.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, rbCashondelivery, -3, SpringLayout.NORTH, lbTransportmethod);
-		springLayout.putConstraint(SpringLayout.SOUTH, rbBymail, -3, SpringLayout.NORTH, lbTransportmethod);
-		springLayout.putConstraint(SpringLayout.EAST, lbTransportmethod, -60, SpringLayout.EAST, rbCashondelivery);
-		springLayout.putConstraint(SpringLayout.WEST, lbTransportmethod, 1, SpringLayout.WEST, lblShoppingcart);
-		frmShoppingcart.getContentPane().add(lbTransportmethod);
+		lbTakewaymeal = new JLabel("Take way meal\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, lbTakewaymeal, 301, SpringLayout.NORTH, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lbTakewaymeal, 271, SpringLayout.WEST, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lbTakewaymeal, -31, SpringLayout.SOUTH, frmShoppingcart.getContentPane());
+		frmShoppingcart.getContentPane().add(lbTakewaymeal);
 		
-		lbTransportmethodText = new JLabel("");
-		springLayout.putConstraint(SpringLayout.NORTH, lbTransportmethodText, 3, SpringLayout.SOUTH, rbCashondelivery);
-		springLayout.putConstraint(SpringLayout.WEST, lbTransportmethodText, 6, SpringLayout.EAST, lbTransportmethod);
-		springLayout.putConstraint(SpringLayout.SOUTH, lbTransportmethodText, 0, SpringLayout.SOUTH, lbTransportmethod);
-		frmShoppingcart.getContentPane().add(lbTransportmethodText);
+		lbTakewaymealText = new JLabel("");
+		springLayout.putConstraint(SpringLayout.NORTH, lbTakewaymealText, 5, SpringLayout.SOUTH, rbDelivery);
+		springLayout.putConstraint(SpringLayout.WEST, lbTakewaymealText, 410, SpringLayout.WEST, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lbTakewaymealText, -31, SpringLayout.SOUTH, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lbTakewaymeal, -34, SpringLayout.WEST, lbTakewaymealText);
+		frmShoppingcart.getContentPane().add(lbTakewaymealText);
+		
+		lbGarnish = new JLabel("Garnish\uFF1A");
+		springLayout.putConstraint(SpringLayout.WEST, lbGarnish, 486, SpringLayout.WEST, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, cartList, -22, SpringLayout.WEST, lbGarnish);
+		frmShoppingcart.getContentPane().add(lbGarnish);
+		
+		btnCheese = new JButton("Cheese");
+		springLayout.putConstraint(SpringLayout.NORTH, btnCheese, -4, SpringLayout.NORTH, lbGarnish);
+		springLayout.putConstraint(SpringLayout.WEST, btnCheese, 6, SpringLayout.EAST, lbGarnish);
+		frmShoppingcart.getContentPane().add(btnCheese);
+		
+		btnMozzarella = new JButton("Mozzarella");
+		springLayout.putConstraint(SpringLayout.NORTH, btnMozzarella, -4, SpringLayout.NORTH, lbGarnish);
+		springLayout.putConstraint(SpringLayout.WEST, btnMozzarella, 2, SpringLayout.EAST, btnCheese);
+		frmShoppingcart.getContentPane().add(btnMozzarella);
+		
+		btnTomatosauce = new JButton("Tomatosauce");
+		springLayout.putConstraint(SpringLayout.NORTH, btnTomatosauce, -4, SpringLayout.NORTH, lbGarnish);
+		springLayout.putConstraint(SpringLayout.WEST, btnTomatosauce, 3, SpringLayout.EAST, btnMozzarella);
+		frmShoppingcart.getContentPane().add(btnTomatosauce);
+		
+		lbSelect = new JLabel("Select\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, lbSelect, 22, SpringLayout.SOUTH, lbGarnish);
+		springLayout.putConstraint(SpringLayout.WEST, lbSelect, 0, SpringLayout.WEST, lbGarnish);
+		frmShoppingcart.getContentPane().add(lbSelect);
 		
 		//按紐分組
 		ButtonGroup bg = new ButtonGroup();  
-		bg.add(rbBymail);
-		bg.add(rbCashondelivery);
+		bg.add(rbPickup);
+		bg.add(rbDelivery);
 		
-		pizzaname = new JLabel("Kinds: ");
-		springLayout.putConstraint(SpringLayout.NORTH, pizzaname, 2, SpringLayout.NORTH, itemList);
-		springLayout.putConstraint(SpringLayout.WEST, pizzaname, 47, SpringLayout.EAST, cartList);
-		springLayout.putConstraint(SpringLayout.SOUTH, pizzaname, -199, SpringLayout.SOUTH, itemList);
-		springLayout.putConstraint(SpringLayout.EAST, pizzaname, 365, SpringLayout.EAST, cartList);
+		pizzaname = new JLabel("Kinds\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, pizzaname, -6, SpringLayout.NORTH, itemList);
+		springLayout.putConstraint(SpringLayout.WEST, pizzaname, 0, SpringLayout.WEST, lbGarnish);
+		springLayout.putConstraint(SpringLayout.EAST, pizzaname, 340, SpringLayout.EAST, cartList);
 		frmShoppingcart.getContentPane().add(pizzaname);
 		
-		pizzacrust = new JLabel("Crust: ");
-		springLayout.putConstraint(SpringLayout.NORTH, pizzacrust, 6, SpringLayout.SOUTH, pizzaname);
-		springLayout.putConstraint(SpringLayout.WEST, pizzacrust, 0, SpringLayout.WEST, pizzaname);
-		springLayout.putConstraint(SpringLayout.SOUTH, pizzacrust, 29, SpringLayout.SOUTH, pizzaname);
-		springLayout.putConstraint(SpringLayout.EAST, pizzacrust, 0, SpringLayout.EAST, pizzaname);
+		pizzacrust = new JLabel("Crust\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, pizzacrust, 10, SpringLayout.SOUTH, pizzaname);
+		springLayout.putConstraint(SpringLayout.WEST, pizzacrust, 22, SpringLayout.EAST, cartList);
+		springLayout.putConstraint(SpringLayout.EAST, pizzacrust, -63, SpringLayout.EAST, frmShoppingcart.getContentPane());
 		frmShoppingcart.getContentPane().add(pizzacrust);
 		
-		pizzamains = new JLabel("Mains: ");
-		springLayout.putConstraint(SpringLayout.NORTH, pizzamains, 6, SpringLayout.SOUTH, pizzacrust);
-		springLayout.putConstraint(SpringLayout.WEST, pizzamains, 0, SpringLayout.WEST, pizzacrust);
-		springLayout.putConstraint(SpringLayout.SOUTH, pizzamains, -10, SpringLayout.SOUTH, button_buy);
-		springLayout.putConstraint(SpringLayout.EAST, pizzamains, 318, SpringLayout.WEST, pizzacrust);
+		pizzamains = new JLabel("Mains\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, pizzamains, 107, SpringLayout.NORTH, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, pizzacrust, -6, SpringLayout.NORTH, pizzamains);
+		springLayout.putConstraint(SpringLayout.WEST, pizzamains, 22, SpringLayout.EAST, cartList);
+		springLayout.putConstraint(SpringLayout.EAST, pizzamains, -63, SpringLayout.EAST, frmShoppingcart.getContentPane());
 		frmShoppingcart.getContentPane().add(pizzamains);
 		
-		pizzasauce = new JLabel("Sauce: ");
-		springLayout.putConstraint(SpringLayout.NORTH, pizzasauce, 6, SpringLayout.SOUTH, pizzamains);
-		springLayout.putConstraint(SpringLayout.WEST, pizzasauce, 0, SpringLayout.WEST, pizzacrust);
-		springLayout.putConstraint(SpringLayout.EAST, pizzasauce, 0, SpringLayout.EAST, pizzacrust);
+		pizzasauce = new JLabel("Sauce\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, pizzasauce, 136, SpringLayout.NORTH, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, pizzasauce, 22, SpringLayout.EAST, cartList);
+		springLayout.putConstraint(SpringLayout.EAST, pizzasauce, -63, SpringLayout.EAST, frmShoppingcart.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, pizzamains, -6, SpringLayout.NORTH, pizzasauce);
 		frmShoppingcart.getContentPane().add(pizzasauce);
 		
-		pizzatopping = new JLabel("Topping: ");
-		springLayout.putConstraint(SpringLayout.NORTH, pizzatopping, 168, SpringLayout.NORTH, frmShoppingcart.getContentPane());
+		pizzatopping = new JLabel("Topping\uFF1A");
+		springLayout.putConstraint(SpringLayout.NORTH, lbGarnish, 14, SpringLayout.SOUTH, pizzatopping);
+		springLayout.putConstraint(SpringLayout.WEST, pizzatopping, 22, SpringLayout.EAST, cartList);
+		springLayout.putConstraint(SpringLayout.EAST, pizzatopping, -63, SpringLayout.EAST, frmShoppingcart.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, pizzasauce, -9, SpringLayout.NORTH, pizzatopping);
-		springLayout.putConstraint(SpringLayout.WEST, pizzatopping, 47, SpringLayout.EAST, cartList);
-		springLayout.putConstraint(SpringLayout.SOUTH, pizzatopping, 0, SpringLayout.SOUTH, button_del);
-		springLayout.putConstraint(SpringLayout.EAST, pizzatopping, 0, SpringLayout.EAST, pizzacrust);
+		springLayout.putConstraint(SpringLayout.NORTH, pizzatopping, 0, SpringLayout.NORTH, button_del);
 		frmShoppingcart.getContentPane().add(pizzatopping);
-
+		
+		lblNewLabel = new JLabel("");
+		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 0, SpringLayout.WEST, btnCheese);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblNewLabel, 0, SpringLayout.SOUTH, lbSelect);
+		frmShoppingcart.getContentPane().add(lblNewLabel);
 		
 	}
 	//設計商品列表的商品資料
@@ -298,48 +331,68 @@ public class MenuView2 {
 		btnExit.addActionListener(actionListener);
 	}
 	
-	//rbBymail的按鈕監聽器
-	public void addRbBymailActionListener(ActionListener actionListener) {
-		rbBymail.addActionListener(actionListener);
+	//rbPickup的按鈕監聽器
+	public void addRbPickupActionListener(ActionListener actionListener) {
+		rbPickup.addActionListener(actionListener);
+	}
+			
+	//rbDelivery的按鈕監聽器
+	public void addRbDeliveryActionListener(ActionListener actionListener){
+		rbDelivery.addActionListener(actionListener);
+	}
+			
+	//設定自取方式的顯示文字
+	public void setTakewaymealText(String text) {
+		lbTakewaymealText.setText(text);
+	}
+			
+	//設定自取按鈕可否點選
+	public void setRbPickupEnabled(boolean b) {
+		rbPickup.setEnabled(b);
+	}
+			
+	//設定外送按鈕可否點選
+	public void setRbDeliveryEnabled(boolean b) {
+		rbDelivery.setEnabled(b);
+	}
+			
+	//設定自取按鈕點選狀態
+	public void setRbPickupSelected(boolean b) {
+		rbPickup.setSelected(b);
+	}
+			
+	//設定外送按鈕點選狀態
+	public void setRbDeliverySelected(boolean b) {
+		rbDelivery.setSelected(b);
+	}
+			
+	//判斷自取按鈕點選狀態
+	public boolean rbRbPickup_isSelected() {
+		return rbPickup.isSelected();
+	}
+			
+	//判斷外送按鈕點選狀態
+	public boolean rbDelivery_isSelected() {
+		return rbDelivery.isSelected();
+	}
+			
+	//Cheese按鈕監聽器
+	public void addCheeseActionListener(ActionListener actionListener) {
+		btnCheese.addActionListener(actionListener);
+	}
+		
+	//Mozzarella按鈕監聽器
+	public void addMozzarellaActionListener(ActionListener actionListener) {
+		btnMozzarella.addActionListener(actionListener);
+	}
+			
+	//Tomatosauce按鈕監聽器
+	public void addTomatosauceActionListener(ActionListener actionListener) {
+		btnTomatosauce.addActionListener(actionListener);
 	}
 	
-	//rbCashondelivery的按鈕監聽器
-	public void addRbCashondeliveryActionListener(ActionListener actionListener){
-		rbCashondelivery.addActionListener(actionListener);
-	}
-	
-	//設定運送方式的顯示文字
-	public void setTransportmethodText(String text) {
-		lbTransportmethodText.setText(text);
-	}
-	
-	//設定郵寄按鈕可否點選
-	public void setRbBymailEnabled(boolean b) {
-		rbBymail.setEnabled(b);
-	}
-	
-	//設定貨到付款按鈕可否點選
-	public void setRbCashondeliveryEnabled(boolean b) {
-		rbCashondelivery.setEnabled(b);
-	}
-	
-	//設定郵寄按鈕點選狀態
-	public void setRbBymailSelected(boolean b) {
-		rbBymail.setSelected(b);
-	}
-	
-	//設定貨到付款按鈕點選狀態
-	public void setRbCashondeliverySelected(boolean b) {
-		rbCashondelivery.setSelected(b);
-	}
-	
-	//判斷郵寄按鈕點選狀態
-	public boolean rbRbBymail_isSelected() {
-		return rbBymail.isSelected();
-	}
-	
-	//判斷貨到付款按鈕點選狀態
-	public boolean rbCashondelivery_isSelected() {
-		return rbCashondelivery.isSelected();
+	//設定選取方式的顯示文字
+	public void setlbSelect(String text) {
+		lbSelect.setText(text);
 	}
 }

@@ -24,5 +24,9 @@ public class ShopListIterator implements Iterator {
 		index++;
 		return item;
 	}
+	
+	public void remove() {
+		
+	}
 
 }

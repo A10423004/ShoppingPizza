@@ -1,6 +1,8 @@
 package server.model;
 
-public class PizzaKinds {
+import client.model.PizzaComponent;
+
+public class PizzaKinds extends PizzaComponent{
 	private String name;		//¤f¨ý
 	private String crust;		//»æ¥Ö
 	private String mains;		//¥DÀ\
@@ -35,7 +37,7 @@ public class PizzaKinds {
 	
 	////////////////////////////////////////////////get
 	
-	public String getName(){
+	public String  getName(){
 		return name;
 	}
 	

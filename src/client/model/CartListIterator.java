@@ -23,5 +23,9 @@ public class CartListIterator implements Iterator {
 		index++;
 		return item;
 	}
+	
+	public void remove() {
+		
+	}
 
 }

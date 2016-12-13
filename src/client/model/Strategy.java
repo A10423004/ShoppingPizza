@@ -1,5 +1,5 @@
 package client.model;
 
 public interface Strategy {
-	public double getTransportPrice();
+	public double getTakewaymealPrice();
 }

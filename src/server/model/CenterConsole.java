@@ -52,8 +52,8 @@ public class CenterConsole implements Subject{
 	/*測試用
 	 * 測試加商品並通知Observer
 	 * */
-	public void addNewItem(String itemName, double price, String crust, String mains, String sauce, String topping){
-		shoplist.add(new ShopItem(itemName,price, crust, mains, sauce, topping));
+	public void addNewItem(String name, double price, String crust, String mains, String sauce, String topping){
+		shoplist.add(new ShopItem(name,price, crust, mains, sauce, topping));
 		notifyObserver();
 		
 	}

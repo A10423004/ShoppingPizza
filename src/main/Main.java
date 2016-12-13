@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		String name, crust, mains, sauce, topping;
 		double price = 0;
-		boolean num = true;
+		boolean num = false;
 		Scanner cin = new Scanner(System.in); 
 				
 		CenterConsole centerConsole = CenterConsole.getProduct();
@@ -47,22 +47,39 @@ public class Main {
 			System.out.println("");
 			
 			System.out.println("Price: ");
-			while(num){
-				
-				try{
+//			try{
+//				while(num != true ){
 					price = cin.nextDouble();
-					num = false;
-				}catch(InputMismatchException e){
-					System.out.print("Please enter number!");
-					cin.next();
-				}
-			}
+					System.out.println("------------------------");
+//				}
+//			}catch(InputMismatchException e){
+//				num = isNumeric(price);
+//				
+//				
+//			}
+//			
+			
+			
+										
 			PizzaBuilder newkindspizza = new PizzaBuilder();
 			Director director = new Director(newkindspizza);
 			director.construct(name, price, crust, mains, sauce, topping);
 			PizzaKinds pizza = newkindspizza.getPizza();
 		
 			centerConsole.addNewItem(pizza.getName(), pizza.getPrice(), pizza.getCrust(), pizza.getMains(), pizza.getSauce(), pizza.getTopping());
+
 		}
+		
+		
 	}
+	public static boolean isNumeric(double num){
+		String number = String.valueOf(num);
+		   for(int i=number.length();--i>=0;){
+		      int chr=number.charAt(i);
+		      if(chr<48 || chr>57)
+		         return false;
+		   }
+		   return true;
+		}
+
 }
