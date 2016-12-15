@@ -47,19 +47,15 @@ public class Main {
 			System.out.println("");
 			
 			System.out.println("Price: ");
-//			try{
-//				while(num != true ){
+			try{
+				while(num != true ){
 					price = cin.nextDouble();
 					System.out.println("------------------------");
-//				}
-//			}catch(InputMismatchException e){
-//				num = isNumeric(price);
-//				
-//				
-//			}
-//			
-			
-			
+				}
+			}catch(InputMismatchException e){
+				num = isNumeric(price);
+			}
+			num = true;
 										
 			PizzaBuilder newkindspizza = new PizzaBuilder();
 			Director director = new Director(newkindspizza);

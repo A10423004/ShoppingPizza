@@ -38,9 +38,8 @@ public class CarList implements List{
 		double total = 0.0;
 		try{
 			for(CartItem item : list){
-				total += item.getPrice() ;
+				total = getStrategy() + totalPrice;
 			}
-			total += getStrategy() + totalPrice;
 			return total;
 		}
 		catch(Exception e){
@@ -56,7 +55,7 @@ public class CarList implements List{
 	public double getStrategy(){
 		return strategy.getTakewaymealPrice();
 	}
-	//set設置Price的方法
+	//set設置PizzaComponentPrice的方法
 	public void setPrice(double price) {
 		this.totalPrice = price;
 	}

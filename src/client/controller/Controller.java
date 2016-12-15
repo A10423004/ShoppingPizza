@@ -35,7 +35,7 @@ public class Controller implements Observer{
 	private CarList carList;
 	private Strategy strategy;
 	private CartItem cartitem;
-	private PizzaComponent PizzaComponent = new PizzaKinds();
+	private PizzaComponent PizzaComponent;
 	double totalPrice;
 	
 	public Controller(MenuView2 menuView2) {
@@ -266,8 +266,9 @@ public class Controller implements Observer{
 	class CheeseActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PizzaComponent = new CheeseConcreateDecorator(PizzaComponent);
-			menuView2.setlbSelect("Select¡G " + PizzaComponent.getName()+ cartitem.getName());
+			PizzaComponent = new CheeseConcreateDecorator(cartitem);
+			cartitem.setName(PizzaComponent.getName());
+			menuView2.setlbSelect("Select¡G " + cartitem.getName());
 			
 			carList.setPrice(PizzaComponent.getPrice());
 		}
@@ -277,8 +278,9 @@ public class Controller implements Observer{
 	class MozzarellaActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PizzaComponent= new MozzarellaConcreateDecorator(PizzaComponent);
-			menuView2.setlbSelect("Select¡G" + PizzaComponent.getName());
+			PizzaComponent= new MozzarellaConcreateDecorator(cartitem);
+			cartitem.setName(PizzaComponent.getName());
+			menuView2.setlbSelect("Select¡G" + cartitem.getName());
 			
 			carList.setPrice(PizzaComponent.getPrice());
 		}
@@ -288,8 +290,9 @@ public class Controller implements Observer{
 	class TomatosauceActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PizzaComponent = new TomatosauceConcreateDecorator(PizzaComponent);
-			menuView2.setlbSelect("Select¡G" + PizzaComponent.getName());
+			PizzaComponent = new TomatosauceConcreateDecorator(cartitem);
+			cartitem.setName(PizzaComponent.getName());
+			menuView2.setlbSelect("Select¡G" + cartitem.getName());
 			
 			carList.setPrice(PizzaComponent.getPrice());
 		}

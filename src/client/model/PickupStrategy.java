@@ -4,6 +4,6 @@ public class PickupStrategy implements Strategy{
 	
 	@Override
 	public double getTakewaymealPrice() {
-		return 30.0;
+		return -30.0;
 	}
 }

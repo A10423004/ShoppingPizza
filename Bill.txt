@@ -1,5 +1,5 @@
 Item Name|    Price|    Subtotal
 -------------------------+---------+------------
-            Sukiyaki Beef|      200.00
+TomatosauceMozzarellaCheeseSukiyaki Beef|      340.00
 -------------------------+----------+------------
-Total: 510.00
+Total: 310.00

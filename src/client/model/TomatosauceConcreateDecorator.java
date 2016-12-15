@@ -1,19 +1,25 @@
 package client.model;
 
 public class TomatosauceConcreateDecorator extends PizzaDecorator{
+	private CartItem item;
+	private String name;
 	
-	public TomatosauceConcreateDecorator(PizzaComponent PizzaComponent) {
-		super(PizzaComponent);
+	public TomatosauceConcreateDecorator(CartItem cartItem) {
+		super(cartItem);
+		this.item = cartItem;
 	}
 
-	@Override
+	//取得Tomatosauce的名子
 	public String getName() {
-		return "Tomatosauce" + this.PizzaComponent.getName();
+		item.setName("Tomatosauce" + item.getName());
+		return item.getName();
 	}
 	
+	//取得Tomatosauce的價錢
 	@Override
 	public double getPrice() {
-		return this.PizzaComponent.getPrice() + 30.0;
+		item.setPrice(item.getPrice() + 30.0);
+		return item.getPrice();
 	}
 	
 }

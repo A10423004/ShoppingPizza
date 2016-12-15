@@ -1,17 +1,23 @@
 package client.model;
 
 public class CheeseConcreateDecorator extends PizzaDecorator{
+	private CartItem item;
 	
-	public CheeseConcreateDecorator(PizzaComponent PizzaComponent) {
-		super(PizzaComponent);
+	public CheeseConcreateDecorator(CartItem cartItem) {
+		super(cartItem);
+		this.item = cartItem;
 	}
 	
-	public String  getName() {
-		return "Cheese" + PizzaComponent.getName();
+	//取得Cheese的名子
+	public String getName() {
+		item.setName("Cheese" + item.getName());
+		return item.getName();
 	}
 	
+	//取得Cheese的價錢
 	public double getPrice() {
-		return this.PizzaComponent.getPrice() + 60.0;
+		item.setPrice(item.getPrice() + 60.0);
+		return item.getPrice();
 	}
 	
 }
