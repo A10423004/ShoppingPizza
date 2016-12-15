@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		String name, crust, mains, sauce, topping;
 		double price = 0;
-		boolean num = false;
+		boolean num = true;
 		Scanner cin = new Scanner(System.in); 
 				
 		CenterConsole centerConsole = CenterConsole.getProduct();
@@ -28,32 +28,30 @@ public class Main {
 		
 			System.out.println("New Pizza Kinds: ");
 			name = cin.next();
-			System.out.println("");
 			
 			System.out.println("Crust: ");
 			crust = cin.next();
-			System.out.println("");
 			
 			System.out.println("Mains: ");
 			mains = cin.next();
-			System.out.println("");
 			
 			System.out.println("Sauce: ");
 			sauce = cin.next();
-			System.out.println("");
 			
 			System.out.println("Topping: ");
 			topping = cin.next();
-			System.out.println("");
 			
 			System.out.println("Price: ");
-			try{
-				while(num != true ){
+		
+			while(num){
+				try {
 					price = cin.nextDouble();
-					System.out.println("------------------------");
+					num = false;
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("Please enter number!");
+					cin.next();
 				}
-			}catch(InputMismatchException e){
-				num = isNumeric(price);
 			}
 			num = true;
 										
@@ -68,14 +66,4 @@ public class Main {
 		
 		
 	}
-	public static boolean isNumeric(double num){
-		String number = String.valueOf(num);
-		   for(int i=number.length();--i>=0;){
-		      int chr=number.charAt(i);
-		      if(chr<48 || chr>57)
-		         return false;
-		   }
-		   return true;
-		}
-
 }

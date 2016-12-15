@@ -201,19 +201,19 @@ public class Controller implements Observer{
 			String msg = "The total price is " + carList.getTotalCost() + "NTD.\nThank you and come again.";
 			menuView2.showCheckOutMessage(msg);
 			String str = "";
-			str += "Item Name|    Price|    Subtotal\n";
-			str += "-------------------------+---------+------------\n";
+			str += "Item Name          |          Price|    TakePrice|    Subtotal\n";
+			str += "-------------------+---------------+-------------+-------------\n";
 			Iterator iterator = carList.iterator();
 			int i = 0;
 			while(iterator.hasNext()){
 				CartItem cartItem = (CartItem) iterator.Next();
 				String name = cartItem.getName();
 				double price = cartItem.getPrice();
-				str += String.format("%25s|%12.2f\n", name, price);
+				double takeprice = carList.getStrategy();
+				str += String.format("%s|%12.2f|%12.2f|%12.2f\n", name, price, takeprice, carList.getTotalCost());
 				i++;
 			}
-			str += "-------------------------+----------+------------\n";
-			str += String.format("Total: %.2f\n", carList.getTotalCost());
+			str += "-------------------+---------------+-------------+-------------\n";
 			try {
 				FileWriter fw = new FileWriter("Bill.txt");
 				fw.write(str);

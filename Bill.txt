@@ -1,5 +1,4 @@
-Item Name|    Price|    Subtotal
--------------------------+---------+------------
-TomatosauceMozzarellaCheeseSukiyaki Beef|      340.00
--------------------------+----------+------------
-Total: 310.00
+Item Name          |          Price|    TakePrice|    Subtotal
+-------------------+---------------+-------------+-------------
+TomatosauceMozzarellaCheesehawaiian|      290.00|      -30.00|      260.00
+-------------------+---------------+-------------+-------------
