@@ -1,10 +1,10 @@
 package server.model;
 
-public class Director {
+public class PizzaDirector {
 	private Builder builder;
 
 	
-	public Director(Builder builder){
+	public PizzaDirector(Builder builder){
 		this.builder = builder;
 	}
 	

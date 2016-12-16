@@ -11,7 +11,7 @@ public class TomatosauceConcreateDecorator extends PizzaDecorator{
 
 	//取得Tomatosauce的名子
 	public String getName() {
-		item.setName("Tomatosauce" + item.getName());
+		item.setName("Tomatosauce " + item.getName());
 		return item.getName();
 	}
 	

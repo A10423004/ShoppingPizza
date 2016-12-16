@@ -13,8 +13,6 @@ public class CenterConsole implements Subject{
 	private ShopList shoplist;
 	
 	
-	
-	
 	private CenterConsole() {
 		observers = new ArrayList<Observer>();
 		shoplist = Db2.getProduct().readItem();

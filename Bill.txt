@@ -1,4 +1,4 @@
 Item Name          |          Price|    TakePrice|    Subtotal
 -------------------+---------------+-------------+-------------
-TomatosauceMozzarellaCheesehawaiian|      290.00|      -30.00|      260.00
+Tomatosauce Mozzarella Cheese Mozzarella Tomatosauce Cheese Tomatosauce Mozzarella Cheese Cheese Cheese Cheese Honey Octopus|      899.99|      -30.00|      869.99
 -------------------+---------------+-------------+-------------

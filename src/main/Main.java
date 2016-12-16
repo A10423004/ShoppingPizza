@@ -5,7 +5,7 @@ import java.util.Scanner;
 import client.controller.Controller;
 import client.view.MenuView2;
 import server.model.CenterConsole;
-import server.model.Director;
+import server.model.PizzaDirector;
 import server.model.PizzaBuilder;
 import server.model.PizzaKinds;
 
@@ -21,8 +21,6 @@ public class Main {
 		MenuView2 mv = new MenuView2();
 		Controller controller = new Controller(mv);
 		centerConsole.register(controller);
-		
-		
 		
 		while(true){
 		
@@ -50,20 +48,19 @@ public class Main {
 				} catch (Exception e) {
 					// TODO: handle exception
 					System.out.println("Please enter number!");
-					cin.next();
+					cin.next();//為了清掉不是Double的值
 				}
 			}
 			num = true;
 										
 			PizzaBuilder newkindspizza = new PizzaBuilder();
-			Director director = new Director(newkindspizza);
+			PizzaDirector director = new PizzaDirector(newkindspizza);
 			director.construct(name, price, crust, mains, sauce, topping);
 			PizzaKinds pizza = newkindspizza.getPizza();
 		
 			centerConsole.addNewItem(pizza.getName(), pizza.getPrice(), pizza.getCrust(), pizza.getMains(), pizza.getSauce(), pizza.getTopping());
 
 		}
-		
 		
 	}
 }

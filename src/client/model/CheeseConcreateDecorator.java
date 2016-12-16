@@ -10,7 +10,7 @@ public class CheeseConcreateDecorator extends PizzaDecorator{
 	
 	//取得Cheese的名子
 	public String getName() {
-		item.setName("Cheese" + item.getName());
+		item.setName("Cheese " + item.getName());
 		return item.getName();
 	}
 	
